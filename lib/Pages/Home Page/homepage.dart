@@ -7,6 +7,7 @@ import 'package:vegiwell/Firebase%20Refrences/Home%20page%20reference/home_ref.d
 import 'package:vegiwell/Models/product_model.dart';
 import 'package:vegiwell/Pages/cartpage.dart';
 import 'package:vegiwell/Pages/offer_page.dart';
+import 'package:vegiwell/Pages/product_details.dart';
 import 'package:vegiwell/Pages/profile_page.dart';
 import 'package:vegiwell/Utils/custom_icons_icons.dart';
 import 'package:vegiwell/Utils/size_config.dart';
@@ -264,97 +265,102 @@ class HomePage extends StatelessWidget {
 }
 
 Widget listCart(ProductData pd) {
-  return Container(
-    height: responsiveHeight(130),
-    width: SizeConfig.screenWidth,
-    padding: EdgeInsets.only(
-      right: responsiveHeight(10),
-      top: responsiveHeight(5),
-      bottom: responsiveHeight(5),
-    ),
-    margin: EdgeInsets.only(
-      left: responsiveHeight(15),
-      right: responsiveHeight(15),
-      top: responsiveHeight(15),
-    ),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(responsiveHeight(20)),
-      color: Colors.amber.shade200,
-    ),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(responsiveHeight(10))),
-          margin: EdgeInsets.symmetric(horizontal: responsiveHeight(12)),
-          height: responsiveHeight(110),
-          width: responsiveHeight(100),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(responsiveHeight(18)),
-            child: Image.network(
-              pd.img,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        // SizedBox(
-        //   width: responsiveWidth(5),
-        // ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              pd.name,
-              style: TextStyle(
-                fontFamily: "Inter",
-                fontSize: responsiveHeight(20),
-                fontWeight: FontWeight.w700,
+  return InkWell(
+    onTap: () {
+      Get.to(() => ProductDetails(pd: pd));
+    },
+    child: Container(
+      height: responsiveHeight(130),
+      width: SizeConfig.screenWidth,
+      padding: EdgeInsets.only(
+        right: responsiveHeight(10),
+        top: responsiveHeight(5),
+        bottom: responsiveHeight(5),
+      ),
+      margin: EdgeInsets.only(
+        left: responsiveHeight(15),
+        right: responsiveHeight(15),
+        top: responsiveHeight(15),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(responsiveHeight(20)),
+        color: Colors.amber.shade200,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(responsiveHeight(10))),
+            margin: EdgeInsets.symmetric(horizontal: responsiveHeight(12)),
+            height: responsiveHeight(110),
+            width: responsiveHeight(100),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(responsiveHeight(18)),
+              child: Image.network(
+                pd.img,
+                fit: BoxFit.cover,
               ),
             ),
-            Text(
-              "200 gm",
-              style: TextStyle(
-                  fontFamily: "Inter",
-                  fontSize: responsiveHeight(17),
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black38),
-            ),
-            Text(
-              pd.price,
-              style: TextStyle(
-                  fontFamily: "Inter",
-                  fontSize: responsiveHeight(15),
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black26),
-            ),
-          ],
-        ),
-
-        Material(
-          elevation: 2,
-          borderRadius: BorderRadius.circular(responsiveHeight(30)),
-          child: Container(
-            height: responsiveHeight(30),
-            width: responsiveWidth(80),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                  colors: [Color(0xFFFCB930), Color(0xFFF16E35)]),
-              borderRadius: BorderRadius.circular(responsiveHeight(30)),
-            ),
-            child: Center(
-                child: Text(
-              "Add",
-              style: TextStyle(fontSize: responsiveHeight(18)),
-            )),
           ),
-        ),
-        // SizedBox(
-        //   width: responsiveWidth(10),
-        // ),
-      ],
+          // SizedBox(
+          //   width: responsiveWidth(5),
+          // ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                pd.name,
+                style: TextStyle(
+                  fontFamily: "Inter",
+                  fontSize: responsiveHeight(20),
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Text(
+                "200 gm",
+                style: TextStyle(
+                    fontFamily: "Inter",
+                    fontSize: responsiveHeight(17),
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black38),
+              ),
+              Text(
+                pd.price,
+                style: TextStyle(
+                    fontFamily: "Inter",
+                    fontSize: responsiveHeight(15),
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black26),
+              ),
+            ],
+          ),
+
+          Material(
+            elevation: 2,
+            borderRadius: BorderRadius.circular(responsiveHeight(30)),
+            child: Container(
+              height: responsiveHeight(30),
+              width: responsiveWidth(80),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                    colors: [Color(0xFFFCB930), Color(0xFFF16E35)]),
+                borderRadius: BorderRadius.circular(responsiveHeight(30)),
+              ),
+              child: Center(
+                  child: Text(
+                "Add",
+                style: TextStyle(fontSize: responsiveHeight(18)),
+              )),
+            ),
+          ),
+          // SizedBox(
+          //   width: responsiveWidth(10),
+          // ),
+        ],
+      ),
     ),
   );
 }

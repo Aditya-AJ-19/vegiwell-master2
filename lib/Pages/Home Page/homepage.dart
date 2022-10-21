@@ -204,6 +204,34 @@ class HomePage extends StatelessWidget {
               ),
               child: FirebaseAnimatedList(
                 query: HomeRef().latestproductRef,
+                defaultChild: SizedBox(
+                  width: SizeConfig.screenWidth,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 4,
+                    itemBuilder: ((context, index) => Container(
+                          margin: EdgeInsets.only(
+                              top: responsiveHeight(10),
+                              left: responsiveHeight(10)),
+                          child: Shimmer.fromColors(
+                            highlightColor: Colors.white.withOpacity(0.6),
+                            baseColor: Colors.grey.shade300,
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: responsiveHeight(170),
+                                  height: responsiveHeight(220),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade300,
+                                      borderRadius: BorderRadius.circular(
+                                          responsiveHeight(20))),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )),
+                  ),
+                ),
                 itemBuilder: (context, snapshot, animation, index) {
                   ProductData productDetails = ProductData(
                     id: snapshot.child('menu_id').value.toString(),

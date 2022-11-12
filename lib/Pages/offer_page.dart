@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:vegiwell/Models/offers_model.dart';
 import 'package:vegiwell/Utils/size_config.dart';
+import 'package:vegiwell/controllers/offers_controller.dart';
 
 class OfferPage extends StatelessWidget {
-  const OfferPage({Key? key}) : super(key: key);
+  OfferPage({Key? key}) : super(key: key);
+  final Offercontroller offerController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -71,23 +75,35 @@ class OfferPage extends StatelessWidget {
                 child: SizedBox(
                   width: SizeConfig.screenWidth,
                   height: responsiveHeight(200),
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 4,
-                    itemBuilder: (context, index) => Container(
-                      height: responsiveHeight(195),
-                      width: responsiveHeight(195),
-                      margin: EdgeInsets.only(left: responsiveHeight(20)),
-                      decoration: BoxDecoration(
-                        // color: Colors.red,
-                        borderRadius:
-                            BorderRadius.circular(responsiveHeight(20)),
-                      ),
-                      child: Image.asset(
-                        "assets/Images/Offer1.png",
-                        fit: BoxFit.contain,
-                      ),
-                    ),
+                  child: StreamBuilder<List<OffersModel>>(
+                    stream: offerController.readOffers(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Somthing went wrong! ${snapshot.error}');
+                      } else if (snapshot.hasData) {
+                        final offers = snapshot.data!;
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: offers.length,
+                          itemBuilder: (context, index) => Container(
+                            height: responsiveHeight(195),
+                            width: responsiveHeight(195),
+                            margin: EdgeInsets.only(left: responsiveHeight(20)),
+                            decoration: BoxDecoration(
+                              // color: Colors.red,
+                              borderRadius:
+                                  BorderRadius.circular(responsiveHeight(20)),
+                            ),
+                            child: Image.network(
+                              offers[index].image,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        );
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    },
                   ),
                 ),
               ),
@@ -139,9 +155,8 @@ Widget otherOffer(String image, String text) {
     width: responsiveHeight(321),
     height: responsiveHeight(92),
     decoration: BoxDecoration(
-      color: Colors.indigo,
-      borderRadius: BorderRadius.circular(responsiveHeight(20))
-    ),
+        color: Colors.indigo,
+        borderRadius: BorderRadius.circular(responsiveHeight(20))),
     child: Row(
       children: [
         Container(
@@ -149,9 +164,11 @@ Widget otherOffer(String image, String text) {
           height: responsiveHeight(60),
           width: responsiveHeight(60),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(responsiveHeight(20))
+              borderRadius: BorderRadius.circular(responsiveHeight(20))),
+          child: Image.asset(
+            "assets/Images/orderboy.png",
+            fit: BoxFit.contain,
           ),
-          child: Image.asset("assets/Images/Offer1.png", fit: BoxFit.contain,),
         ),
         SizedBox(
           width: responsiveWidth(20),
@@ -159,10 +176,19 @@ Widget otherOffer(String image, String text) {
         SizedBox(
           width: responsiveHeight(210),
           height: responsiveHeight(70),
-          child: Center(child: Text("UPTO 10 % CASHBACK ON PAYING WITH ANY UPI TRANSACTIONS ",style: TextStyle(fontSize: responsiveHeight(16),fontFamily: "Inter",fontWeight: FontWeight.bold,color: Colors.white,),textAlign: TextAlign.center,)),
+          child: Center(
+              child: Text(
+            "UPTO 10 % CASHBACK ON PAYING WITH ANY UPI TRANSACTIONS ",
+            style: TextStyle(
+              fontSize: responsiveHeight(16),
+              fontFamily: "Inter",
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.center,
+          )),
         ),
       ],
     ),
   );
 }
-

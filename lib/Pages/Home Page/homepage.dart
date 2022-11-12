@@ -406,7 +406,7 @@ class _MainHomePageState extends State<MainHomePage> {
   final screens = [
     HomePage(),
     const CartPage(),
-    const OfferPage(),
+    OfferPage(),
     ProfilePage(),
   ];
   @override
